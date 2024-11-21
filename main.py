@@ -35,7 +35,7 @@ def main():
                 return   
 
         for obj in updatable:
-            obj.update(dt)
+            obj.update(dt)          
 
         # Collision detection between asteroids and player
         for obj in asteroids:
@@ -47,6 +47,9 @@ def main():
 
         for obj in drawable:
             obj.draw(screen)
+        
+        if player.shot_timer > 0:
+            player.shot_timer -= dt
         
         pygame.display.flip()
         
