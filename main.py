@@ -38,19 +38,24 @@ def main():
             obj.update(dt)          
 
         # Collision detection between asteroids and player
-        for obj in asteroids:
-            if obj.collision(player):
+        for asteroid in asteroids:
+            if asteroid.collision(player):
                 print("Game Over!")
-                sys.exit()  
+                sys.exit()
+
+        # Collision detection between shots and asteroids
+        for shot in shots:
+            for asteroid in asteroids:
+                if shot.collision(asteroid):
+                    asteroid.kill()
+                    shot.kill()
+                          
 
         screen.fill("black")        
 
         for obj in drawable:
-            obj.draw(screen)
-        
-        if player.shot_timer > 0:
-            player.shot_timer -= dt
-        
+            obj.draw(screen) 
+
         pygame.display.flip()
         
         # Framerate limited to 60 FPS        

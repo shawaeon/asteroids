@@ -7,11 +7,13 @@ from constants import *
 class Player(CircleShape):
     def __init__(self, x, y):
         super().__init__(x, y, PLAYER_RADIUS)
-        self.rotation = 180
-    
-    shot_timer = 0
+        self.rotation = 180    
+        self.shot_timer = 0        
     
     def update(self, dt):
+        if self.shot_timer > 0:
+            self.shot_timer -= dt
+
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_w]:
@@ -45,10 +47,10 @@ class Player(CircleShape):
 
     def shoot(self, dt):
         if self.shot_timer > 0:
-            pass
-        else:
-            shot = Shot(self.position.x, self.position.y)
-            shot.velocity = pygame.Vector2(0, 1).rotate(self.rotation) * PLAYER_SHOOT_SPEED
-            self.shot_timer += PLAYER_SHOT_COOLDOWN
+            return
+        
+        shot = Shot(self.position.x, self.position.y)
+        shot.velocity = pygame.Vector2(0, 1).rotate(self.rotation) * PLAYER_SHOOT_SPEED
+        self.shot_timer += PLAYER_SHOT_COOLDOWN
         
 
